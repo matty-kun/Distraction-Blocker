@@ -3,13 +3,23 @@
     "name": "Distraction Blocker",
     "version": "1.0",
     "description": "Block distraction sites and stay focused",
-    "permission": ["storage", "tabs"],
+    "permissions": ["storage", "tabs"],
     "background": {
         "service_worker": "background.js"
     },
     "action": {
         "default_popup": "popup.html",
-        "default_icon": "icon.png"
-        
-    }
+        "default_icon": {
+            "48": "assets/icon.png"
+        }
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content.js"]
+        }
+    ],
+    "host_permissions": [
+        "all_urls"
+    ]
 }
