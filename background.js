@@ -5,9 +5,10 @@ chrome.runtime.onInstalled.addListener(() => {
     console.log("Distraction Blocker extension installed.");
     // Set initial state and store it
     isBlocked = false;
-    chrome.storage.sync.set({ isBlocked });
-    // Create an alarm to toggle the blocking state every minute
-    chrome.alarms.create('toggleBlock', { periodInMinutes: 1 });
+    chrome.storage.sync.set({ isBlocked }, () => {
+        // Create an alarm to toggle the blocking state every minute
+        chrome.alarms.create('toggleBlock', { periodInMinutes: 1 });
+    });
 });
 
 // Listen for alarm events
