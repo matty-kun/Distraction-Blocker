@@ -9,20 +9,13 @@ chrome.storage.sync.get(["blockedSites", "isBlocked"], ({ blockedSites = [], isB
     // Check if blocking is enabled and if the current site is in the blocked list
     if (isBlocked && normalizedBlockedSites.some(site => currentSite.includes(site))) {
         const observer = new MutationObserver(() => {
-            document.body.style.backgroundColor = "black";
-            document.body.style.color = "white";
-            document.body.style.margin = "0";
-            document.body.style.height = "100vh";
-            document.body.style.display = "flex";
-            document.body.style.flexDirection = "column";
-            document.body.style.justifyContent = "center";
-            document.body.style.alignItems = "center";
-            setTimeout(() => {                
+            document.body.classList.add('blocked');
 
+            setTimeout(() => {                
                 document.body.innerHTML = `
-                <div style="text-align: center; font-size: 24px; margin-top: 20%">
-                    <p style="font-size: 24px; font-weight: bold; color: white" >Stay Focused!</p>
-                    <p style="font-size: 18px; color: white">Discipline is the bridge between goals and accomplishment.</p>
+                <div class="blocked-content">
+                    <p>Stay Focused!</p>
+                    <p>Discipline is the bridge between goals and accomplishment.</p>
                 </div>
                 `;
             }, 100);

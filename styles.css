@@ -1,0 +1,10 @@
+body.blocked {
+    background-color: black;
+    color: white;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-diretion: column;
+    justify-content: center;
+    align-items: center;
+}
