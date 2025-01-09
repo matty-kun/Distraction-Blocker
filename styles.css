@@ -4,7 +4,24 @@ body.blocked {
     margin: 0;
     height: 100vh;
     display: flex;
-    flex-diretion: column;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.blocked-message {
+    text-align: center;
+    font-size: 24pc;
+    margin-top: 20%;
+}
+
+.blocked-message p {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+.blocked-message p + p {
+    font-size: 18px;
+    color: white;
 }
