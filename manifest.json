@@ -21,6 +21,7 @@
         }
     ],
     "host_permissions": [
-        "*://*/*"
+        "*://*/*",
+        "https://api.quotable.io/*"
     ]
 }
