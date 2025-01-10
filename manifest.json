@@ -22,6 +22,8 @@
     ],
     "host_permissions": [
         "*://*/*",
-        "https://api.quotable.io/*"
+        "https://zenquotes.io/*",
+        "https://api.quotable.io/*",
+        "https://programming-quotes-api.herokuapp.com/*"
     ]
 }

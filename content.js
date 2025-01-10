@@ -8,13 +8,28 @@ chrome.storage.sync.get(["blockedSites", "isBlocked"], ({ blockedSites = [], isB
     
     // Function to fetch a random quote from the Quotable API
     const fetchRandomQuote = async () => {
+        const apis = [
+            "https://zenquotes.io/api/random",
+            "https://api.quotable.io/random",
+            "https://programming-quotes-api.herokuapp.com/quotes/random"
+        ];
+
+        const api = apis[Math.floor(Math.random() * apis.length)];
+        console.log("Fetching quote from:", api);
+        
         try {
-            const response = await fetch("https://api.quotable.io/random");
+            const response = await fetch(api);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
-            return `${data.content} — ${data.author}`;
+            if (api.includes("zenquotes.io")) {
+                return `${data[0].q} — ${data[0].a}`;
+            } else if (api.includes("quotable.io")) {
+                return `${data.content} — ${data.author}`;
+            } else if (api.includes("programming-quotes-api.herokuapp.com")) {
+                return `${data.en} — ${data.author}`;
+            }
         }  catch (error) { 
             console.error("Error fetching quote:", error);
             return "Discipline is the bridge between goals and accomplishment. —Jim Rohn";
