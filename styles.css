@@ -11,17 +11,18 @@ body.blocked {
 
 .blocked-message {
     text-align: center;
-    font-size: 24pc;
+    font-size: 24px;
     margin-top: 20%;
 }
 
 .blocked-message p {
     font-size: 24px;
-    font-weight: bold;
     color: white;
+    font-weight: bold;
 }
 
 .blocked-message p + p {
     font-size: 18px;
     color: white;
+    font-weight: italic;
 }
