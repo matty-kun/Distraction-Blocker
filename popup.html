@@ -4,16 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Document</title>
+    <title>Distraction Blocker</title>
 </head>
 <body>
-    <h1>Stay Focused</h1>
-    <label for="block-sites">Sites to Block</label>
-    <textarea id="block-sites" placeholder="e.g., www.facebook.com"></textarea>
-    <label>
-        <input type="checkbox" id="block-toggle"> Enable Blocking
-    </label>
-    <button id="save-settings">Save</button>
+    <div class="popup-container">
+        <h1>Distraction Blocker</h1>
+        <p class="description">Block distracting websites and stay focused on what matters most.</p>
+        
+        <!-- Blocked Sites Section -->
+        <div class="section toggle">
+            <label for="block-sites">Blocked Sites</label>
+            <textarea id="block-sites" placeholder="e.g., facebook.com"></textarea>
+        <div>
+
+        <!-- Enable Blocking Section -->
+         <div class = "section toggle">
+            <label for="block-toggle">Enable Blocking</label>
+            <input type="checkbox" id="block-toggle">
+         </div>
+
+        <!-- Save Button -->
+         <button id="save-settings">Save Settings</button>
+    </div>
 </body>
 <script src="popup.js"></script>
 </html>

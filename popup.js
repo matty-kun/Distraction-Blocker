@@ -4,15 +4,12 @@ const saveButton = document.getElementById("save-settings");
 const blockToggle = document.getElementById("block-toggle");
 
 
-// Load the blocked sites when the popup opens
-chrome.storage.sync.get(["blockedSites"], ({ blockedSites }) => {
-    blockedSitesInput.value = blockedSites ? blockedSites.join("\n") : ""; // Show blocked sites as a list
+// Load saved settings
+chrome.storage.sync.get(["blockedSites", "isBlocked"], ({ blockedSites = [], isBlocked }) => {
+    blockedSitesInput.value = blockedSites.join("\n"); // Load sites as a list
+    blockToggle.checked = isBlocked; // Set the togggle state
 }) ;
 
-// Load the blocking status when the popup opens
-chrome.storage.sync.get(["isBlocked"], ({ isBlocked }) => {
-    blockToggle.checked = isBlocked ?? false;
-});
 
 // Save the blocked sites when the button is clicked
 saveButton.addEventListener("click", () => {
@@ -21,9 +18,7 @@ saveButton.addEventListener("click", () => {
         .map(site => site.trim()) // Remove extra spaces
         .filter(site => site); // Remove empty lines
 
-    chrome.storage.sync.set({ blockedSites: sites }, () => {
-        alert("Blocked sites updated");
+    chrome.storage.sync.set({ blockedSites: sites, isBlocked: blockToggle.checked }, () => {
+        alert("Settings saved successfully!");
     });
-
-    chrome.storage.sync.set({ isBlocked: blockToggle.checked });
 });
