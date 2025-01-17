@@ -49,7 +49,7 @@ chrome.storage.sync.get(["blockedSites", "isBlocked"], ({ blockedSites = [], isB
             setTimeout(() => {                
                 console.log("Replacing content for:", currentSite);
                 document.body.innerHTML = `
-                <div class="blocked-message">
+                <div class="block-messages">
                     <p>Stay Focused!</p>
                     <p>${randomQuote}</p>
                 </div>

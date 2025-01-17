@@ -9,19 +9,19 @@ body.blocked {
     align-items: center;
 }
 
-.blocked-message {
+.blocked-messages {
     text-align: center;
     font-size: 24px;
     margin-top: 20%;
 }
 
-.blocked-message p {
+.blocked-messages p {
     font-size: 24px;
     color: white;
     font-weight: bold;
 }
 
-.blocked-message p + p {
+.blocked-messages p + p {
     font-size: 18px;
     color: white;
     font-style: italic;
