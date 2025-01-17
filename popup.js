@@ -8,7 +8,7 @@ const blockToggle = document.getElementById("block-toggle");
 chrome.storage.sync.get(["blockedSites", "isBlocked"], ({ blockedSites = [], isBlocked }) => {
     blockedSitesInput.value = blockedSites.join("\n"); // Load sites as a list
     blockToggle.checked = isBlocked; // Set the togggle state
-}) ;
+});
 
 
 // Save the blocked sites when the button is clicked
