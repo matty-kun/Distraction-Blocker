@@ -17,7 +17,7 @@
         {
             "matches": ["*://*/*"],
             "js": ["content.js"],
-            "css": ["styles.css"]
+            "css": ["styles.css", "assets/bootstrap.min.css"]
         }
     ],
     "host_permissions": [
