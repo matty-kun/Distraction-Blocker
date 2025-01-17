@@ -16,8 +16,7 @@
     "content_scripts": [
         {
             "matches": ["*://*/*"],
-            "js": ["content.js"],
-            "css": ["styles.css", "assets/bootstrap.min.css"]
+            "js": ["content.js"]
         }
     ],
     "host_permissions": [
@@ -25,5 +24,14 @@
         "https://zenquotes.io/*",
         "https://api.quotable.io/*",
         "https://programming-quotes-api.herokuapp.com/*"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "assets/bootstrap/css/bootstrap.min.css",
+                "assets/bootstrap/js/bootstrap.min.js"
+            ],
+            "matches": ["<all_urls>"]
+        }
     ]
 }

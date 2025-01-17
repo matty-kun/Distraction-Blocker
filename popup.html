@@ -3,31 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="assets/bootstrap/bootstrap.min.css">
+    <!-- Optional for custom styles -->
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <title>Distraction Blocker</title>
 </head>
 <body>
-    <div class="popup-container">
-        <h1>Distraction Blocker</h1>
-        <p class="description">Block distracting websites and stay focused on what matters most.</p>
+    <div class="container mt-4">
+        <h1 class="text-center">Distraction Blocker</h1>
+        <p class="description text-center">Block distracting websites and stay focused on what matters most.</p>
         
         <!-- Blocked Sites Section -->
-        <div class="section toggle">
-            <label for="block-sites">Blocked Sites</label>
-            <textarea id="block-sites" placeholder="e.g., facebook.com"></textarea>
+        <div class="section toggle mb-3">
+            <label for="block-sites" class="form-label">Blocked Sites</label>
+            <textarea id="block-sites" class="form-control" placeholder="e.g., facebook.com"></textarea>
         <div>
 
         <!-- Enable Blocking Section -->
-         <div class = "section toggle">
-            <label for="block-toggle">Enable Blocking</label>
-            <input type="checkbox" id="block-toggle">
+         <div class = "section toggle mb3 form-check">
+            <label for="block-toggle" class="form-check-label">Enable Blocking</label>
+            <input type="checkbox" id="block-toggle" class="form-check-input">
          </div>
 
         <!-- Save Button -->
-         <button id="save-settings">Save Settings</button>
+         <button id="save-settings" class="btn btn-primary w-100">Save Settings</button>
     </div>
 </body>
 <script src="popup.js"></script>
-<script src="assets/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </html>
