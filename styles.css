@@ -7,6 +7,7 @@ body.blocked {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
 .blocked-messages {
@@ -25,4 +26,30 @@ body.blocked {
     font-size: 18px;
     color: white;
     font-style: italic;
+}
+
+body.bg-dark {
+    background-color: #343a40 !important;
+    color: #ffffff !important;
+}
+
+textarea.bg-dark {
+    background-color: #343a40 !important;
+    color: #ffffff !important;
+    border: 1px solid #495057;
+}
+
+.form-check-label {
+    color: #ffffff !important;
+}
+
+.btn-secondary {
+    background-color: #6c757d !important; /* Custom color for the button */
+    border-color: #6c757d !important;
+    color: #ffffff !important;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268 !important; /* Darker shade for hover effect */
+    border-color: #545b62 !important;
 }

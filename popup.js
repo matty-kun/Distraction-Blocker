@@ -3,6 +3,12 @@ const blockedSitesInput = document.getElementById("block-sites");
 const saveButton = document.getElementById("save-settings");
 const blockToggle = document.getElementById("block-toggle");
 
+// Press Enter to save settings
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        document.getElementById("save-settings").click();
+    }
+});
 
 // Load saved settings
 chrome.storage.sync.get(["blockedSites", "isBlocked"], ({ blockedSites = [], isBlocked }) => {

@@ -30,9 +30,12 @@
         {
             "resources": [
                 "assets/bootstrap/css/bootstrap.min.css",
-                "assets/bootstrap/js/bootstrap.min.js"
+                "assets/bootstrap/js/bootstrap.bundle.min.js"
             ],
             "matches": ["<all_urls>"]
         }
-    ]
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' https://zenquotes.io https://api.quotable.io https://programming-quotes-api.herokuapp.com"
+    }
 }
