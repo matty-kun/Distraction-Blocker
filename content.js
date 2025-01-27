@@ -2,36 +2,21 @@
 const localQuotes = [
     { content: "Discipline is the bridge between goals and accomplishment.", author: "Jim Rohn" },
     { content: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+    { content: "Success is not the key to happiness. Happiness is the key to success.", author: "Albert Schweitzer" },
+    { content: "Your time is limited, don't waste it living someone else's life.", author: "Steve Jobs" },
+    { content: "The best way to predict the future is to invent it.", author: "Alan Kay" },
+    { content: "The only limit to our realization of tomorrow is our doubts of today.", author: "Franklin D. Roosevelt" },
+    { content: "The purpose of our lives is to be happy.", author: "Dalai Lama" },
+    { content: "Life is what happens when you're busy making other plans.", author: "John Lennon" },
+    { content: "Get busy living or get busy dying.", author: "Stephen King" },
+    { content: "You have within you right now, everything you need to deal with whatever the world can throw at you.", author: "Brian Tracy" },
     // Add more quotes as needed
 ];
 
-// Function to fetch a random quote from APIs or fallback to local quotes
-const fetchRandomQuote = async () => {
-    const apis = [
-        "https://zenquotes.io/api/random",
-        "https://api.quotable.io/random",
-    ];
-    const api = apis[Math.floor(Math.random() * apis.length)];
-    console.log("Fetching quote from:", api);
-
-    try {
-        const response = await fetch(api);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        if (api.includes("zenquotes.io")) {
-            return `${data[0].q} — ${data[0].a}`;
-        } else if (api.includes("quotable.io")) {
-            return `${data.content} — ${data.author}`;
-        }
-    } catch (error) {
-        console.error("Error fetching quote:", error.message);
-
-        // Select a random quote from the local array as fallback
-        const fallbackQuote = localQuotes[Math.floor(Math.random() * localQuotes.length)];
-        return `${fallbackQuote.content} — ${fallbackQuote.author}`;
-    }
+// Function to fetch a random quote from local quotes
+const fetchRandomQuote = () => {
+    const fallbackQuote = localQuotes[Math.floor(Math.random() * localQuotes.length)];
+    return `${fallbackQuote.content} — ${fallbackQuote.author}`;
 };
 
 // Main logic for site blocking
@@ -51,17 +36,16 @@ chrome.storage.sync.get(["blockedSites", "isBlocked"], ({ blockedSites = [], isB
         document.body.classList.add('blocked');
 
         // Fetch a random quote and display it
-        fetchRandomQuote().then(randomQuote => {
-            // Replace the content with a short delay
-            setTimeout(() => {
-                console.log("Replacing content for:", currentSite);
-                document.body.innerHTML = `
-                <div class="blocked-message">
-                    <p>Stay Focused!</p>
-                    <p>${randomQuote}</p>
-                </div>
-                `;
-            }, 100);
-        });
+        const randomQuote = fetchRandomQuote();
+        // Replace the content with a short delay
+        setTimeout(() => {
+            console.log("Replacing content for:", currentSite);
+            document.body.innerHTML = `
+            <div class="blocked-message">
+                <p>Stay Focused!</p>
+                <p>${randomQuote}</p>
+            </div>
+            `;
+        }, 10);
     }
 });
