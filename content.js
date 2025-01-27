@@ -13,14 +13,20 @@ const localQuotes = [
     // Add more quotes as needed
 ];
 
-// Function to fetch a random quote from local quotes
-const fetchRandomQuote = () => {
-    const fallbackQuote = localQuotes[Math.floor(Math.random() * localQuotes.length)];
-    return `${fallbackQuote.content} — ${fallbackQuote.author}`;
+// Function to fetch a random quote from local and custom quotes
+const fetchRandomQuote = async () => {
+    const customQuotes = await new Promise(resolve => {
+        chrome.storage.sync.get(["customQuotes"], ({ customQuotes = [] }) => {
+            resolve(customQuotes);
+        });
+    });
+    const allQuotes = [...localQuotes, ...customQuotes];
+    const randomQuote = allQuotes[Math.floor(Math.random() * allQuotes.length)];
+    return `${randomQuote.content} — ${randomQuote.author}`;
 };
 
 // Main logic for site blocking
-chrome.storage.sync.get(["blockedSites", "isBlocked"], ({ blockedSites = [], isBlocked }) => {
+chrome.storage.sync.get(["blockedSites", "isBlocked", "blockEndTime"], ({ blockedSites = [], isBlocked, blockEndTime }) => {
     const currentSite = window.location.hostname.toLowerCase();
     console.log("Blocked sites:", blockedSites);
     console.log("Is blocking enabled:", isBlocked);
@@ -36,16 +42,17 @@ chrome.storage.sync.get(["blockedSites", "isBlocked"], ({ blockedSites = [], isB
         document.body.classList.add('blocked');
 
         // Fetch a random quote and display it
-        const randomQuote = fetchRandomQuote();
-        // Replace the content with a short delay
-        setTimeout(() => {
-            console.log("Replacing content for:", currentSite);
-            document.body.innerHTML = `
-            <div class="blocked-message">
-                <p>Stay Focused!</p>
-                <p>${randomQuote}</p>
-            </div>
-            `;
-        }, 10);
+        fetchRandomQuote().then(randomQuote => {
+            // Replace the content with a short delay
+            setTimeout(() => {
+                console.log("Replacing content for:", currentSite);
+                document.body.innerHTML = `
+                <div class="blocked-message">
+                    <p>Stay Focused!</p>
+                    <p>${randomQuote}</p>
+                </div>
+                `;
+            }, 10);
+        });
     }
 });

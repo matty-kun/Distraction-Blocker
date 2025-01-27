@@ -21,3 +21,14 @@ chrome.alarms.onAlarm.addListener((alarm) => {
         console.log(`Blocking status toggled: ${isBlocked}`);
     }
 });
+
+// Check the timer periodically
+setInterval(() => {
+    chrome.storage.sync.get(["blockEndTime"], ({ blockEndTime }) => {
+        if (blockEndTime && Date.now() >= blockEndTime) {
+            chrome.storage.sync.set({ isBlocked: false, blockEndTime: null }, () => {
+                console.log("Blocking period ended");
+            });
+        }
+    });
+}, 60000); // Check every minute

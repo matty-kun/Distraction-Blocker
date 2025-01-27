@@ -1,30 +1,58 @@
 // Refers the textarea and button
 const blockedSitesInput = document.getElementById("block-sites");
-const saveButton = document.getElementById("save-settings");
 const blockToggle = document.getElementById("block-toggle");
+const saveSettingsButton = document.getElementById("save-settings");
+const customQuoteContentInput = document.getElementById("custom-quote-content");
+const customQuoteAuthorInput = document.getElementById("custom-quote-author");
+const addQuoteButton = document.getElementById("add-quote");
+const blockTimerInput = document.getElementById("block-timer");
+const setTimerButton = document.getElementById("set-timer");
 
-// Press Enter to save settings
-document.addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
-        document.getElementById("save-settings").click();
+// Load settings from storage
+chrome.storage.sync.get(["blockedSites", "isBlocked", "customQuotes", "blockEndTime"], ({ blockedSites = [], isBlocked, customQuotes = [], blockEndTime }) => {
+    blockedSitesInput.value = blockedSites.join("\n");
+    blockToggle.checked = isBlocked;
+    customQuotes.forEach(quote => {
+        console.log(`Custom Quote: ${quote.content} — ${quote.author}`);
+    });
+    if (blockEndTime) {
+        const remainingTime = Math.max(0, Math.floor((blockEndTime - Date.now()) / 60000));
+        blockTimerInput.value = remainingTime;
     }
 });
 
-// Load saved settings
-chrome.storage.sync.get(["blockedSites", "isBlocked"], ({ blockedSites = [], isBlocked }) => {
-    blockedSitesInput.value = blockedSites.join("\n"); // Load sites as a list
-    blockToggle.checked = isBlocked; // Set the togggle state
+// Save settings to storage
+saveSettingsButton.addEventListener("click", () => {
+    const blockedSites = blockedSitesInput.value.split("\n").map(site => site.trim()).filter(site => site);
+    const isBlocked = blockToggle.checked;
+    chrome.storage.sync.set({ blockedSites, isBlocked }, () => {
+        console.log("Settings saved");
+    });
 });
 
+// Add custom quote to storage
+addQuoteButton.addEventListener("click", () => {
+    const content = customQuoteContentInput.value.trim();
+    const author = customQuoteAuthorInput.value.trim();
+    if (content && author) {
+        chrome.storage.sync.get(["customQuotes"], ({ customQuotes = [] }) => {
+            customQuotes.push({ content, author });
+            chrome.storage.sync.set({ customQuotes }, () => {
+                console.log("Custom quote added");
+                customQuoteContentInput.value = "";
+                customQuoteAuthorInput.value = "";
+            });
+        });
+    }
+});
 
-// Save the blocked sites when the button is clicked
-saveButton.addEventListener("click", () => {
-    const sites = blockedSitesInput.value
-        .split("\n") // Split by new lines
-        .map(site => site.trim()) // Remove extra spaces
-        .filter(site => site); // Remove empty lines
-
-    chrome.storage.sync.set({ blockedSites: sites, isBlocked: blockToggle.checked }, () => {
-        alert("Settings saved successfully!");
-    });
+// Set timer for blocking
+setTimerButton.addEventListener("click", () => {
+    const minutes = parseInt(blockTimerInput.value, 10);
+    if (!isNaN(minutes) && minutes > 0) {
+        const blockEndTime = Date.now() + minutes * 60000;
+        chrome.storage.sync.set({ blockEndTime }, () => {
+            console.log(`Blocking set for ${minutes} minutes`);
+        });
+    }
 });

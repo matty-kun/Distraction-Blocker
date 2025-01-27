@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="popup.css"> 
+    <link rel="stylesheet" href="styles.css"> <!-- For the content -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> <!-- For the UI of Popup -->
     <title>Distraction Blocker</title>
 </head>
@@ -22,6 +22,21 @@
         <div class="section toggle mb-3 form-check">
             <input type="checkbox" id="block-toggle" class="form-check-input">
             <label for="block-toggle" class="form-check-label">Enable Blocking</label>
+        </div>
+
+        <!-- Timer Section -->
+        <div class="section mb-3">
+            <label for="block-timer" class="form-label">Block for (minutes)</label>
+            <input type="number" id="block-timer" class="form-control mb-2" placeholder="e.g., 30">
+            <button id="set-timer" class="btn btn-secondary w-100 mb-3">Set Timer</button>
+        </div>
+
+        <!-- Add Custom Quote Section -->
+        <div class="section mb-3">
+            <label for="custom-quote" class="form-label">Add Custom Quote</label>
+            <input type="text" id="custom-quote-content" class="form-control mb-2" placeholder="Quote">
+            <input type="text" id="custom-quote-author" class="form-control mb-2" placeholder="Author">
+            <button id="add-quote" class="btn btn-secondary w-100 mb-3">Add Quote</button>
         </div>
 
         <!-- Save Button -->
