@@ -2,13 +2,9 @@ let isBlocked = false;
 
 // Initialize the extension when installed
 chrome.runtime.onInstalled.addListener(() => {
-    console.log("Distraction Blocker extension installed.");
-    // Set initial state and store it
-    isBlocked = false;
-    chrome.storage.sync.set({ isBlocked }, () => {
-        // Create an alarm to toggle the blocking state every minute
-        chrome.alarms.create('toggleBlock', { periodInMinutes: 1 });
-    });
+    chrome.storage.sync.set({ isBlocked: false, blockEndTime: null });
+    // Create an alarm to toggle the blocking state every minute
+    chrome.alarms.create('toggleBlock', { periodInMinutes: 1 });
 });
 
 // Listen for alarm events
@@ -19,6 +15,31 @@ chrome.alarms.onAlarm.addListener((alarm) => {
         // Update storage with the new state
         chrome.storage.sync.set({ isBlocked });
         console.log(`Blocking status toggled: ${isBlocked}`);
+    } else if (alarm.name === 'playPauseToggled') {
+        console.log('Play/Pause button toggled');
+        // Add any additional actions for play/pause button here
+        chrome.notifications.create({
+            type: 'basic',
+            iconUrl: 'icon.png',
+            title: 'Play/Pause Toggled',
+            message: 'The play/pause button was toggled.'
+        });
+    } else if (alarm.name === 'quoteAdded') {
+        console.log('Quote added');
+        // Add any additional actions for adding a quote here
+        chrome.notifications.create({
+            type: 'basic',
+            iconUrl: 'icon.png',
+            title: 'Quote Added',
+            message: 'A new quote was added.'
+        });
+    } else if (alarm.name === 'timerFinished') {
+        chrome.notifications.create({
+            type: 'basic',
+            iconUrl: 'icon.png',
+            title: 'Timer Completed',
+            message: 'The timer has finished!'
+        });
     }
 });
 
@@ -28,6 +49,12 @@ setInterval(() => {
         if (blockEndTime && Date.now() >= blockEndTime) {
             chrome.storage.sync.set({ isBlocked: false, blockEndTime: null }, () => {
                 console.log("Blocking period ended");
+                chrome.notifications.create({
+                    type: 'basic',
+                    iconUrl: 'icon.png',
+                    title: 'Blocking Period Ended',
+                    message: 'The blocking period has ended.'
+                });
             });
         }
     });

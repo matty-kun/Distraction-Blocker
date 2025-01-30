@@ -23,3 +23,38 @@ textarea.bg-dark {
     background-color: #5a6268 !important; /* Darker shade for hover effect */
     border-color: #545b62 !important;
 }
+
+/* Button press effect */
+.btn-press:active {
+    transform: translateY(2px);
+    box-shadow: 0 5px #666;
+}
+
+/* Timer button wrapper */
+.timer-button-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.timer-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 4px solid transparent;
+    box-sizing: border-box;
+    animation: timer-animation linear forwards;
+}
+
+@keyframes timer-animation {
+    from {
+        border-color: #28a745;
+        transform: rotate(0deg);
+    }
+    to {
+        border-color: #28a745;
+        transform: rotate(360deg);
+    }
+}
