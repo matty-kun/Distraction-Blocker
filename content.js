@@ -13,46 +13,22 @@ const localQuotes = [
     // Add more quotes as needed
 ];
 
-// Function to fetch a random quote from local and custom quotes
-const fetchRandomQuote = async () => {
-    const customQuotes = await new Promise(resolve => {
-        chrome.storage.sync.get(["customQuotes"], ({ customQuotes = [] }) => {
-            resolve(customQuotes);
-        });
-    });
-    const allQuotes = [...localQuotes, ...customQuotes];
-    const randomQuote = allQuotes[Math.floor(Math.random() * allQuotes.length)];
+// Function to fetch a random quote from local quotes
+const fetchRandomQuote = () => {
+    const randomQuote = localQuotes[Math.floor(Math.random() * localQuotes.length)];
     return `${randomQuote.content} — ${randomQuote.author}`;
 };
 
 // Main logic for site blocking
-chrome.storage.sync.get(["blockedSites", "isBlocked", "blockEndTime"], ({ blockedSites = [], isBlocked, blockEndTime }) => {
+chrome.storage.sync.get(["isBlocked"], ({ isBlocked }) => {
     const currentSite = window.location.hostname.toLowerCase();
-    console.log("Blocked sites:", blockedSites);
-    console.log("Is blocking enabled:", isBlocked);
 
-    // Ensure that all blocked sites are in lowercase
-    const normalizedBlockedSites = blockedSites.map((site) => site.toLowerCase());
-
-    // Check if blocking is enabled and if the current site is in the blocked list
-    if (isBlocked && normalizedBlockedSites.some(site => currentSite.includes(site))) {
-        console.log("Blocking site:", currentSite);
-
-        // Add the 'blocked' class to the body to apply the styles
-        document.body.classList.add('blocked');
-
-        // Fetch a random quote and display it
-        fetchRandomQuote().then(randomQuote => {
-            // Replace the content with a short delay
-            setTimeout(() => {
-                console.log("Replacing content for:", currentSite);
-                document.body.innerHTML = `
-                <div class="blocked-message">
-                    <p>Stay Focused!</p>
-                    <p>${randomQuote}</p>
-                </div>
-                `;
-            }, 10);
-        });
+    if (isBlocked) {
+        document.body.innerHTML = `
+            <div class="blocked-message" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; text-align: center; background-color: #000; color: #fff;">
+                <p style="font-size: 2em; margin-bottom: 20px;">Stay Focused!</p>
+                <p id="quote" style="font-size: 1.5em; margin-bottom: 20px;">${fetchRandomQuote()}</p>
+            </div>
+        `;
     }
 });

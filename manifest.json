@@ -3,7 +3,7 @@
     "name": "Distraction Blocker",
     "version": "1.0",
     "description": "Block distraction sites and stay focused",
-    "permissions": ["storage", "tabs", "alarms"],
+    "permissions": ["storage", "tabs", "alarms", "activeTab", "scripting"],
     "background": {
         "service_worker": "background.js"
     },
@@ -20,12 +20,6 @@
             "css": ["content.css"]
         }
     ],
-    "host_permissions": [
-        "*://*/*",
-        "https://zenquotes.io/*",
-        "https://api.quotable.io/*",
-        "https://programming-quotes-api.herokuapp.com/*"
-    ],
     "web_accessible_resources": [
         {
             "resources": [
@@ -34,8 +28,5 @@
             ],
             "matches": ["<all_urls>"]
         }
-    ],
-    "content_security_policy": {
-        "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' https://zenquotes.io https://api.quotable.io https://programming-quotes-api.herokuapp.com"
-    }
+    ]
 }
