@@ -15,20 +15,37 @@ const localQuotes = [
 
 // Function to fetch a random quote from local quotes
 const fetchRandomQuote = () => {
-    const randomQuote = localQuotes[Math.floor(Math.random() * localQuotes.length)];
-    return `${randomQuote.content} — ${randomQuote.author}`;
+    const fallbackQuote = localQuotes[Math.floor(Math.random() * localQuotes.length)];
+    return `${fallbackQuote.content} — ${fallbackQuote.author}`;
 };
 
 // Main logic for site blocking
-chrome.storage.sync.get(["isBlocked"], ({ isBlocked }) => {
+chrome.storage.sync.get(["blockedSites", "isBlocked"], ({ blockedSites = [], isBlocked }) => {
     const currentSite = window.location.hostname.toLowerCase();
+    console.log("Blocked sites:", blockedSites);
+    console.log("Is blocking enabled:", isBlocked);
 
-    if (isBlocked) {
-        document.body.innerHTML = `
-            <div class="blocked-message" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; text-align: center; background-color: #000; color: #fff;">
-                <p style="font-size: 2em; margin-bottom: 20px;">Stay Focused!</p>
-                <p id="quote" style="font-size: 1.5em; margin-bottom: 20px;">${fetchRandomQuote()}</p>
+    // Ensure that all blocked sites are in lowercase
+    const normalizedBlockedSites = blockedSites.map((site) => site.toLowerCase());
+
+    // Check if blocking is enabled and if the current site is in the blocked list
+    if (isBlocked && normalizedBlockedSites.some(site => currentSite.includes(site))) {
+        console.log("Blocking site:", currentSite);
+
+        // Add the 'blocked' class to the body to apply the styles
+        document.body.classList.add('blocked');
+
+        // Fetch a random quote and display it
+        const randomQuote = fetchRandomQuote();
+        // Replace the content with a short delay
+        setTimeout(() => {
+            console.log("Replacing content for:", currentSite);
+            document.body.innerHTML = `
+            <div class="blocked-message">
+                <p>Stay Focused!</p>
+                <p>${randomQuote}</p>
             </div>
-        `;
+            `;
+        }, 10);
     }
 });

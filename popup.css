@@ -1,94 +1,25 @@
-body {
-    background-color: #1d1d1f;
-    color: #f5f5f7;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+body.bg-dark {
+    background-color: #343a40 !important;
+    color: #ffffff !important;
 }
 
-.container {
-    background-color: #2c2c2e;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    width: 300px;
-    text-align: center;
-}
-
-h1 {
-    font-size: 2em;
-    margin-bottom: 10px;
-    color: #f5f5f7;
-}
-
-.description {
-    font-size: 1em;
-    margin-bottom: 20px;
-    color: #a1a1a6;
-}
-
-.section {
-    margin-bottom: 15px;
-}
-
-.form-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 600;
-    color: #f5f5f7;
-}
-
-.form-control {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #3a3a3c;
-    border-radius: 8px;
-    background-color: #3a3a3c;
-    color: #f5f5f7;
-    font-size: 1.2em;
-    box-sizing: border-box;
-}
-
-.form-control:focus {
-    border-color: #007aff;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.25);
-}
-
-.form-check-input {
-    margin-right: 10px;
+textarea.bg-dark {
+    background-color: #343a40 !important;
+    color: #ffffff !important;
+    border: 1px solid #495057;
 }
 
 .form-check-label {
-    color: #f5f5f7;
-    font-weight: 600;
+    color: #ffffff !important;
 }
 
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1em;
-    font-weight: 600;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+.btn-secondary {
+    background-color: #6c757d !important; /* Custom color for the button */
+    border-color: #6c757d !important;
+    color: #ffffff !important;
 }
 
-.btn-primary {
-    background-color: #007aff;
-    color: #ffffff;
-}
-
-.btn-primary:hover {
-    background-color: #005bb5;
-}
-
-.w-100 {
-    width: 100%;
+.btn-secondary:hover {
+    background-color: #5a6268 !important; /* Darker shade for hover effect */
+    border-color: #545b62 !important;
 }

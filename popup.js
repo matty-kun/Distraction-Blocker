@@ -1,42 +1,30 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const blockedSitesInput = document.getElementById("block-sites");
-    const blockToggle = document.getElementById("block-toggle");
-    const saveSettingsButton = document.getElementById("save-settings");
+// Refers the textarea and button
+const blockedSitesInput = document.getElementById("block-sites");
+const saveButton = document.getElementById("save-settings");
+const blockToggle = document.getElementById("block-toggle");
 
-    // Load settings from storage
-    chrome.storage.sync.get(["blockedSites", "isBlocked"], ({ blockedSites = [], isBlocked }) => {
-        blockedSitesInput.value = blockedSites.join(", ");
-        blockToggle.checked = isBlocked;
-    });
+// Press Enter to save settings
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        document.getElementById("save-settings").click();
+    }
+});
 
-    // Save settings to storage
-    const saveSettings = () => {
-        const blockedSites = blockedSitesInput.value.split(/[\s,]+/).map(site => site.trim()).filter(site => site);
-        const isBlocked = blockToggle.checked;
-        chrome.storage.sync.set({ blockedSites, isBlocked }, () => {
-            console.log("Settings saved");
-            if (isBlocked) {
-                chrome.runtime.sendMessage({ type: "toggleBlocking", isBlocked: true });
-            } else {
-                chrome.runtime.sendMessage({ type: "toggleBlocking", isBlocked: false });
-            }
-        });
-    };
+// Load saved settings
+chrome.storage.sync.get(["blockedSites", "isBlocked"], ({ blockedSites = [], isBlocked }) => {
+    blockedSitesInput.value = blockedSites.join("\n"); // Load sites as a list
+    blockToggle.checked = isBlocked; // Set the togggle state
+});
 
-    saveSettingsButton.addEventListener("click", saveSettings);
 
-    // Add event listener for Enter key
-    blockedSitesInput.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            saveSettings();
-        }
-    });
+// Save the blocked sites when the button is clicked
+saveButton.addEventListener("click", () => {
+    const sites = blockedSitesInput.value
+        .split("\n") // Split by new lines
+        .map(site => site.trim()) // Remove extra spaces
+        .filter(site => site); // Remove empty lines
 
-    blockToggle.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            saveSettings();
-        }
+    chrome.storage.sync.set({ blockedSites: sites, isBlocked: blockToggle.checked }, () => {
+        alert("Settings saved successfully!");
     });
 });

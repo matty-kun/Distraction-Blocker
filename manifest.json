@@ -3,7 +3,7 @@
     "name": "Distraction Blocker",
     "version": "1.0",
     "description": "Block distraction sites and stay focused",
-    "permissions": ["storage", "tabs", "alarms", "activeTab", "scripting"],
+    "permissions": ["storage", "tabs", "alarms"],
     "background": {
         "service_worker": "background.js"
     },

@@ -1,21 +1,23 @@
+let isBlocked = false;
+
 // Initialize the extension when installed
 chrome.runtime.onInstalled.addListener(() => {
-    chrome.storage.sync.set({ isBlocked: false });
+    console.log("Distraction Blocker extension installed.");
+    // Set initial state and store it
+    isBlocked = false;
+    chrome.storage.sync.set({ isBlocked }, () => {
+        // Create an alarm to toggle the blocking state every minute
+        chrome.alarms.create('toggleBlock', { periodInMinutes: 1 });
+    });
 });
 
-// Listen for messages to start blocking
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.type === "toggleBlocking") {
-        chrome.storage.sync.set({ isBlocked: message.isBlocked }, () => {
-            if (message.isBlocked) {
-                // Create a notification when the site is successfully blocked
-                chrome.notifications.create({
-                    type: "basic",
-                    iconUrl: "icon.png",
-                    title: "Site Blocked",
-                    message: "The site has been successfully blocked."
-                });
-            }
-        });
+// Listen for alarm events
+chrome.alarms.onAlarm.addListener((alarm) => {
+    if (alarm.name === 'toggleBlock') {
+        // Toggle blocking state
+        isBlocked = !isBlocked;
+        // Update storage with the new state
+        chrome.storage.sync.set({ isBlocked });
+        console.log(`Blocking status toggled: ${isBlocked}`);
     }
 });
