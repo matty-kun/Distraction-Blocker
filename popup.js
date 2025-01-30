@@ -13,7 +13,7 @@ document.addEventListener("keydown", function (event) {
 // Load saved settings
 chrome.storage.sync.get(["blockedSites", "isBlocked"], ({ blockedSites = [], isBlocked }) => {
     blockedSitesInput.value = blockedSites.join("\n"); // Load sites as a list
-    blockToggle.checked = isBlocked; // Set the togggle state
+    blockToggle.checked = isBlocked; // Set the toggle state
 });
 
 
