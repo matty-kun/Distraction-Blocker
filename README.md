@@ -15,7 +15,6 @@ This is a Chrome Extension that block websites that distract you from working or
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
 - [Questions](#questions)
 - [Credits](#credits)
 
@@ -44,10 +43,6 @@ To use this project, you can follow these steps:
 ## Contributing
 
 If you would like to contribute to this project, you can fork this repository and clone it to your local machine. You can add additional features to this extension and submit a pull request.
-
-## License
-
-This project is licensed under the MIT License - see the `LICENSE` file for details.
 
 ## Questions
 
