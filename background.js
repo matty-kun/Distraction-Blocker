@@ -21,3 +21,5 @@ chrome.alarms.onAlarm.addListener((alarm) => {
         console.log(`Blocking status toggled: ${isBlocked}`);
     }
 });
+
+
